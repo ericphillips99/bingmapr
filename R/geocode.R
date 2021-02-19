@@ -10,8 +10,6 @@ geocode <- function(addressLine=NULL,locality=NULL,adminDistrict=NULL,postalCode
   params=list(addressLine=addressLine,locality=locality,adminDistrict=adminDistrict,postalCode=postalCode,countryRegion=countryRegion,maxResults=maxResults,includeNeighborhood=includeNeighborhood,key=key)
   ua=user_agent('https://github.com/ericphillips99/bingmapr/tree/main')
   response <- GET(url='http://dev.virtualearth.net/REST/v1/Locations/',query=params,user_agent=ua)
-  print(response)
-  print(length(response))
   # Check if request was successful
   if (status_code(response)!=200) {
     # Check for invalid API key
