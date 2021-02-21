@@ -21,6 +21,7 @@
 #'
 #' @importFrom httr GET user_agent http_status status_code content
 #' @importFrom jsonlite fromJSON
+#' @importFrom utils str
 #'
 location_recognition <- function(lat,long,radius=0.25,top=5,dateTime=NULL,type=NULL,distanceUnit='mi',includeEntityTypes=NULL,verboseplacenames=NULL) {
   # Check if user has set API key as env var
