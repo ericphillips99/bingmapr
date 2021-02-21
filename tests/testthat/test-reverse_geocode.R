@@ -1,5 +1,8 @@
 # Testing the reverse_geocode function
 
+context("Reverse geocoding wrapper function for Bing Maps")
+library(bingmapr)
+
 kelowna_address <- reverse_geocode(lat=49.8682,long=-119.4889)
 bay_area_address <- reverse_geocode(lat=37.7128,long=-122.0293)
 
