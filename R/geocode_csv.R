@@ -12,8 +12,9 @@
 #' @return Tibble containing the original CSV with the columns "latitude" and "longitude" appended \cr
 #' Saves a copy of the inputted CSV including the geocoded coordinates to the same location as the original CSV with '_geocoded' appended to the filename
 
-#' @importFrom readr read_csv
+#' @importFrom readr read_csv write_csv
 #' @importFrom stringr str_split
+#' @importFrom utils str
 #'
 geocode_csv <- function(csv_path,addressLine_col=NULL,locality_col=NULL,adminDistrict_col=NULL,postalCode_col=NULL,countryRegion_col=NULL) {
   csv <- read_csv(csv_path)
@@ -64,7 +65,7 @@ geocode_csv <- function(csv_path,addressLine_col=NULL,locality_col=NULL,adminDis
 
   # Save to disk
   path_to_csv <- paste(str_split(csv_path,'.csv')[[1]][1],'_geocoded.csv',sep='')
-  write.csv(csv,file=path_to_csv)
+  write_csv(csv,file=path_to_csv)
 
   # Return tibble with geocoded chords
   csv

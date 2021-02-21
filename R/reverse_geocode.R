@@ -15,8 +15,9 @@
 #' "params": Parameters inputted into the API from the user\cr
 #' "response": Response object returned from httr, including the request URL, status code returned, and time of request\cr
 #'
-#' @importFrom httr GET user_agent http_status status_code
+#' @importFrom httr GET user_agent http_status status_code content
 #' @importFrom jsonlite fromJSON
+#' @importFrom utils str
 #'
 reverse_geocode <- function(lat,long,includeEntityTypes=NULL,verboseplacenames=NULL,includeNeighborhood=NULL) {
   # Check if user has set API key as env var
