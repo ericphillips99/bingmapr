@@ -1,6 +1,6 @@
-test_geocode <- geocode(addressLine='2135 Bennett Road',locality='Kelowna',adminDistrict='BC',postalCode='V1V 2C2',countryRegion='CA',maxResults=1,includeNeighborhood=NULL)
-test_no_postal_code <- geocode(addressLine='244 Lake Mead Rd',locality='Calgary',adminDistrict='AB',postalCode='',countryRegion='CA',maxResults=1,includeNeighborhood=NULL)
-test_invalid_country_code <- geocode(addressLine='405 Spray Ave',locality='Banff',adminDistrict='AB',postalCode='T1L 1J4',countryRegion='Canada',maxResults=1,includeNeighborhood=NULL)
+test_geocode <- geocode(addressLine='2135 Bennett Road',locality='Kelowna',adminDistrict='BC',postalCode='V1V 2C2',countryRegion='CA',includeNeighborhood=NULL)
+test_no_postal_code <- geocode(addressLine='244 Lake Mead Rd',locality='Calgary',adminDistrict='AB',postalCode='',countryRegion='CA',includeNeighborhood=NULL)
+test_invalid_country_code <- geocode(addressLine='405 Spray Ave',locality='Banff',adminDistrict='AB',postalCode='T1L 1J4',countryRegion='Canada',includeNeighborhood=NULL)
 
 context("test the geocode function with reasonable inputs with different addresses and some missing/incorrect parameters that might be expected")
 
