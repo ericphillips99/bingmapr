@@ -1,6 +1,23 @@
-library(httr)
-library(jsonlite)
-
+#' reverse_geocode
+#'
+#' Reverse geocodes an address using the Bing Maps Locations API
+#' For more information, please see https://docs.microsoft.com/en-us/bingmaps/rest-services/locations/find-a-location-by-point
+#'
+#' @param lat Latitude of the location (e.g. '37.7708' )
+#' @param long Longitude of the location (e.g. '-122.4195')
+#' @param includeEntityTypes Only include the specified entity types (e.g. 'naturalPOI')
+#' @param verboseplacenames Whether the returned location names should be represented with their official abbreviations or in expanded form (e.g. 'true' or 'false'), default value is 'false'
+#' @param includeNeighborhood Whether the response should include the neighborhood of the location (e.g. "0" or "1")
+#'
+#' @return S3 object containing the API response. Includes: \cr
+#' "address": Complete geocoded address\cr
+#' "content": Complete parsed response, including the geocoded address separated by descriptor as well as other information about the location\cr
+#' "params": Parameters inputted into the API from the user\cr
+#' "response": Response object returned from httr, including the request URL, status code returned, and time of request\cr
+#'
+#' @importFrom httr GET user_agent http_status status_code
+#' @importFrom jsonlite fromJSON
+#'
 reverse_geocode <- function(lat,long,includeEntityTypes=NULL,verboseplacenames=NULL,includeNeighborhood=NULL) {
   # Check if user has set API key as env var
   key <- Sys.getenv('api_key')
@@ -11,7 +28,7 @@ reverse_geocode <- function(lat,long,includeEntityTypes=NULL,verboseplacenames=N
   params=list(includeEntityTypes=includeEntityTypes,verboseplacenames=verboseplacenames,includeNeighborhood=includeNeighborhood,key=key)
   ua=user_agent('https://github.com/ericphillips99/bingmapr/tree/main')
   response <- GET(url='http://dev.virtualearth.net',path=paste('/REST/v1/Locations/',chords,sep=''),query=params,user_agent=ua)
-  print(response)
+
   # Check if request was successful
   if (status_code(response)!=200) {
     # Check for invalid API key
