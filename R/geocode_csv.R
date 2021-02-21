@@ -1,8 +1,20 @@
-source('R/geocode.R')
-library(readr)
-library(dplyr)
-library(stringr)
+#' geocode_csv
+#'
+#' Geocodes a set of addresses from a CSV file using the geocode function from bingmapr
+#'
+#' @param csv_path File path of the CSV file with addresses to geocode
+#' @param addressLine_col Name of the column in the CSV containing the addressLine of the locations
+#' @param locality_col Name of the column in the CSV containing the locality of the locations
+#' @param adminDistrict_col Name of the column in the CSV containing the adminDistrict of the locations
+#' @param postalCode_col Name of the column in the CSV containing the postalCode of the locations
+#' @param countryRegion_col Name of the column in the CSV containing the countryRegion of the locations
+#'
+#' @return Tibble containing the original CSV with the columns "latitude" and "longitude" appended \cr
+#' Saves a copy of the inputted CSV including the geocoded coordinates to the same location as the original CSV with '_geocoded' appended to the filename
 
+#' @importFrom readr read_csv
+#' @importFrom stringr str_split
+#'
 geocode_csv <- function(csv_path,addressLine_col=NULL,locality_col=NULL,adminDistrict_col=NULL,postalCode_col=NULL,countryRegion_col=NULL) {
   csv <- read_csv(csv_path)
   # Check if provided columns exist

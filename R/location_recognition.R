@@ -1,6 +1,27 @@
-library(httr)
-library(jsonlite)
-
+#' location_recognition
+#'
+#' Returns a list of entities (business entities and natural points of interest) near an inputted coordinate pair using the Bing Maps Locations API
+#' For more information, please see https://docs.microsoft.com/en-us/bingmaps/rest-services/locations/location-recognition
+#'
+#' @param lat Latitude of the location (e.g. '37.7708' )
+#' @param long Longitude of the location (e.g. '-122.4195')
+#' @param radius Radius (using units specified in distanceUnit) in which to find locations (e.g. '1.5'), default value is 0.25, maximum is 2
+#' @param top Number of nearby entities to include (e.g. '10'), default value is 5, maximum is 20
+#' @param dateTime Only include entities open at the specified date and time (e.g. '2021-01-01 12:00:00')
+#' @param type Only include entities with the specified category types (e.g. 'EatDrink')
+#' @param distanceUnit Units used for the radius parameter (e.g. 'km' or 'mi'), default value is 'mi'
+#' @param includeEntityTypes Only include the specified entity types (e.g. 'naturalPOI')
+#' @param verboseplacenames Whether the returned location names should be represented with their official abbreviations or in expanded form (e.g. 'true' or 'false'), default value is 'false'
+#'
+#' @return S3 object containing the API response. Includes: \cr
+#' "business": Business entities returned, including their name, address, website, phone number, etc.\cr
+#' "naturalPOI": Natural POIs returned, including their name and type\cr
+#' "params": Parameters inputted into the API from the user\cr
+#' "response": Response object returned from httr, including the request URL, status code returned, and time of request\cr
+#'
+#' @importFrom httr GET user_agent http_status status_code
+#' @importFrom jsonlite fromJSON
+#'
 location_recognition <- function(lat,long,radius=0.25,top=5,dateTime=NULL,type=NULL,distanceUnit='mi',includeEntityTypes=NULL,verboseplacenames=NULL) {
   # Check if user has set API key as env var
   key <- Sys.getenv('api_key')
@@ -11,7 +32,7 @@ location_recognition <- function(lat,long,radius=0.25,top=5,dateTime=NULL,type=N
   params=list(radius=radius,top=top,dateTime=dateTime,type=type,distanceUnit=distanceUnit,includeEntityTypes=includeEntityTypes,verboseplacenames=verboseplacenames,key=key)
   ua=user_agent('https://github.com/ericphillips99/bingmapr/tree/main')
   response <- GET(url='http://dev.virtualearth.net',path=paste('/REST/v1/LocationRecog/',chords,sep=''),query=params,user_agent=ua)
-  print(response)
+
   # Check if request was successful
   if (status_code(response)!=200) {
     # Check for invalid API key
@@ -26,7 +47,7 @@ location_recognition <- function(lat,long,radius=0.25,top=5,dateTime=NULL,type=N
     stop('Request unsuccessful: Empty response returned. Perhaps you have entered an invalid coordinate pair?')
   }
   # Parse response
-  parsed_response <- jsonlite::fromJSON(content(response,'text'),simplifyVector=FALSE)
+  parsed_response <- fromJSON(content(response,'text'),simplifyVector=FALSE)
   structure(list(business=parsed_response$resourceSets[[1]]$resources[[1]]$businessesAtLocation,naturalPOI=parsed_response$resourceSets[[1]]$resources[[1]]$naturalPOIAtLocation,params=params,response=response),class='location_recognition')
 }
 

@@ -1,21 +1,13 @@
 Package: bingmapr
 Title: R Wrapper for the Bing Maps API
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "Eric",
-           family = "Phillips",
-           role = c("aut", "cre"),
-           email = "ericphillips99@me.com"
-    person(given = "Thomson",
-           family = "Hawks",
-           role = c("aut", "cre"),
-           email = "email"
-    person(given = "Mitch",
-           family = "DeCock",
-           role = c("aut", "cre"),
-           email = "email"
-Description: Provides an easy way to query the Bing Maps API through R. Currently includes functions for geocoding and reverse geocoding.
-License: use_gpl3_license()
+Authors@R: c(
+	person('Eric','Phillips',email='ericphillips99@me.com',role=c('aut','cre')),
+	person('Thomson','Hawks',email='thomsonhawks@gmail.com',role=c('aut')),
+	person('Mitch','DeCock',email='mitchdecock@gmail.com',role=c('aut')))
+Description: Provides an easy way to query the Bing Maps API through R. Currently includes functions for geocoding, reverse geocoding, and location recognition.
+Imports: httr,jsonlite,stringr,readr
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
