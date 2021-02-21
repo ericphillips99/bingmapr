@@ -7,11 +7,11 @@ context("test the geocode function with reasonable inputs with different address
 library(bingmapr)
 
 test_that("is latitude correct", {
-  expect_equal(round(test_geocode$chords$latitude,digits=3), 49.960 )
+  expect_equal(round(test_geocode$chords$latitude,digits=2), 49.96 )
 })
 
 test_that("is longitude correct", {
-  expect_equal(round(test_geocode$chords$longitude,digits=3), -119.461 )
+  expect_equal(round(test_geocode$chords$longitude,digits=2), -119.46 )
 })
 
 test_that("Check status code is 200", {
@@ -33,17 +33,12 @@ test_that("function inputs merge properly", {
   expect_equal(test_geocode$content$address$formattedAddress, '2135 Bennett Rd, Kelowna, BC V1V 2C2, Canada')
 })
 
-
-
-
-
-
 test_that("is latitude correct", {
-  expect_equal(round(test_no_postal_code$chords$latitude,digits=3), 50.938 )
+  expect_equal(round(test_no_postal_code$chords$latitude,digits=2), 50.94 )
 })
 
 test_that("is longitude correct", {
-  expect_equal(round(test_no_postal_code$chords$longitude,digits=3), -114.061 )
+  expect_equal(round(test_no_postal_code$chords$longitude,digits=2), -114.06 )
 })
 
 test_that("Check status code is 200", {
@@ -66,17 +61,12 @@ test_that("function inputs merge properly", {
 })
 
 
-
-
-
-
-
 test_that("is latitude correct", {
-  expect_equal(round(test_invalid_country_code$chords$latitude,digits=3), 51.164)
+  expect_equal(round(test_invalid_country_code$chords$latitude,digits=2), 51.16)
 })
 
 test_that("is longitude correct", {
-  expect_equal(round(test_invalid_country_code$chords$longitude,digits=3), -115.561 )
+  expect_equal(round(test_invalid_country_code$chords$longitude,digits=2), -115.56)
 })
 
 test_that("Check status code is 200", {
