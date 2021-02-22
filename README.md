@@ -17,7 +17,7 @@ Install [RStudio](https://rstudio.com/) or another R-compatible IDE to install `
 
 ### Installation
 
-```bash
+```R
 devtools::install_github("https://github.com/ericphillips99/bingmapr")
 ```
 
@@ -35,7 +35,7 @@ In order to make use of any of the functions contained within this package, you 
 
 ## Usage
 
-```python
+```R
 libarary(bingmapr)
 
 # Geocoding
@@ -53,18 +53,6 @@ rev_geocode_result <- reverse_geocode(lat=49.8682,long=-119.4889)
 rev_geocode_result$address
 # "674 Patterson Ave, Kelowna, BC V1Y 5C7, Canada"
 
-# Location Recognition
-loc_recog_result <- location_recognition(lat=49.8682,long=-119.4889)
-loc_recog_result$business[[1]]
-# $businessAddress$addressLine
-# [1] "665B Patterson Ave"
-# ...
-# $businessInfo
-# $businessInfo$entityName
-# [1] "Perception Marketing"
-# ...
-# $businessInfo$type
-# [1] "Business-to-Business"
 
 # Location Recognition
 loc_recog_result <- location_recognition(lat=49.8682,long=-119.4889)
