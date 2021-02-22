@@ -111,3 +111,28 @@ print(applepark_reverse_geocode['content'])
 
 ## location_recognition
 
+The `location_recognition` function can be used to find a list of entities, including both businesses and natural points of interest, located within a given radius of an inputted coordinate pair using the Bing Maps Location API. It takes a latitude and longitude pair, radius size, and top parameter indicating the number of nearby locations to return as input as its key input parameters, and returns a list of nearby entities (separated between "business" and "natural POI") with information including their name, address, and contact information.
+
+For example, suppose we wished to find a list of 3 entities within a 0.5 mile radius of the coordinate pair (37.7734,-122.4216), a location in San Francisco. We could accomplish this using `location_recognition`:
+
+```{r}
+sf_lr <- location_recognition(lat=37.7734,long=-122.4216,radius=0.5,top=6)
+```
+
+We can print the object returned by the function:
+```{r}
+print(sf_lr)
+```
+
+Let's take a closer look at the structure of the object returned by `location_recognition`:
+
+```{r}
+print(typeof(sf_lr))
+print(names(sf_lr))
+```
+
+We see here that `location_recognition` returns a named list with four parts: "business", "naturalPOI", "params", and "response". The "params" and "response" sections include the same information as in the `geocode` and `reverse_geocode` functions, so I will not cover them here (please see the above example of `geocode` for an explanation of these sections).
+
+The locations returned by the API are separated based on their entity type, and are contained within the "business" and "naturalPOI" sections of the returned object. We specified the top parameter as 0.5, meaning that the API will limit its search to locations within 0.5 miles of our inputted location (kilometers can be used by setting the "distanceUnit" parameter equal to "km" in `location_recognition`)
+
+maximum number of returned locations is specified by the "top" parameter (3 in this case)
