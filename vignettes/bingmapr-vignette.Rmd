@@ -74,3 +74,40 @@ print(applepark_geocode['params'])
 print(applepark_geocode['response'])
 ```
 
+## reverse_geocode
+
+The `reverse_geocode` function can be used to reverse geocode an address using the Bing Maps Locations API. It essentially performs the opposite task of the `geocode` function, in that it takes in a latitude and longitude pair and returns the addressLine, locality, adminDistrict, postalCode, and countryRegion corresponding to the address at that location.
+
+Continuing with our Apple Park example from the `geocode` function, suppose we had the coordinate pair (37.3348,-122.0091), and wished to obtain the address associated with this location. We can accomplish this using `reverse_geocode`:
+
+```{r}
+applepark_reverse_geocode <- reverse_geocode(lat=37.3348,long=-122.0091)
+```
+
+We can print the response of our reverse geocode call:
+
+```{r}
+print(applepark_reverse_geocode)
+```
+
+Once again, we can examine the structure of the returned object:
+
+```{r}
+print(typeof(applepark_reverse_geocode))
+print(names(applepark_reverse_geocode))
+```
+
+Here, we see that the structure of the object is very similar to that of the `geocode` function, with the only difference being the inclusion of "address" instead of "chords" since we are now reverse geocoding. Given the high degree of similarity in output between `geocode` and `reverse_geocode`, I will not go into detail in explaining the output here. Please see the above example of `geocode` for a more detailed explanation.
+
+**address:** Contains the complete geocoded address.
+```{r}
+print(applepark_reverse_geocode['address'])
+```
+
+**content:** Contains similar information about the location as was returned in `geocode`.
+```{r}
+print(applepark_reverse_geocode['content'])
+```
+
+## location_recognition
+
