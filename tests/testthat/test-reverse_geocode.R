@@ -2,7 +2,6 @@
 
 context("Reverse geocoding wrapper function for Bing Maps")
 library(bingmapr)
-Sys.setenv(api_key="AiKOkTc7X6nt2Zlljde8g2AW3zDup7GaDz2LU-kxFzGh-3TnjOsawuZ025p29jUS")
 
 kelowna_address <- reverse_geocode(lat=49.8682,long=-119.4889)
 bay_area_address <- reverse_geocode(lat=37.7128,long=-122.0293)
