@@ -44,3 +44,11 @@ We can then print the response of our geocode request:
 print(applepark_geocode)
 ```
 
+Let's take a closer look at the object returned by `geocode`.
+
+```{r}
+print(typeof(applepark_geocode))
+print(names(applepark_geocode))
+```
+
+Here, we see that `geocode` returns a named list with four parts: "chords", "content", "params", and "response".
