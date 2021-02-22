@@ -113,10 +113,11 @@ print(applepark_reverse_geocode['content'])
 
 The `location_recognition` function can be used to find a list of entities, including both businesses and natural points of interest, located within a given radius of an inputted coordinate pair using the Bing Maps Location API. It takes a latitude and longitude pair, radius size, and top parameter indicating the number of nearby locations to return as input as its key input parameters, and returns a list of nearby entities (separated between "business" and "natural POI") with information including their name, address, and contact information.
 
-For example, suppose we wished to find a list of 3 entities within a 0.5 mile radius of the coordinate pair (37.7734,-122.4216), a location in San Francisco. We could accomplish this using `location_recognition`:
+For example, suppose we wished to find a list of 3 entities within a 0.5 mile radius of the coordinate pair (37.7734,-122.4216), a location in San Francisco. We will specify the radius parameter as 0.5 so that the API to limit its search radius to locations within 0.5 miles of our inputted coordinate pair (kilometers can be used by setting the "distanceUnit" parameter equal to "km"). We will set the top parameter equal to 3, causing the API to return a maximum of 3 nearby locations (if the number of entities found within your specified search radius is less than your top parameter, then the number of entities returned will be less).
 
+We are ready to make our call to `location_recognition`:
 ```{r}
-sf_lr <- location_recognition(lat=37.7734,long=-122.4216,radius=0.5,top=6)
+sf_lr <- location_recognition(lat=37.7734,long=-122.4216,radius=0.5,top=3)
 ```
 
 We can print the object returned by the function:
@@ -133,6 +134,16 @@ print(names(sf_lr))
 
 We see here that `location_recognition` returns a named list with four parts: "business", "naturalPOI", "params", and "response". The "params" and "response" sections include the same information as in the `geocode` and `reverse_geocode` functions, so I will not cover them here (please see the above example of `geocode` for an explanation of these sections).
 
-The locations returned by the API are separated based on their entity type, and are contained within the "business" and "naturalPOI" sections of the returned object. We specified the top parameter as 0.5, meaning that the API will limit its search to locations within 0.5 miles of our inputted location (kilometers can be used by setting the "distanceUnit" parameter equal to "km" in `location_recognition`)
+The locations returned by `location_recognition` are separated by entity type under the "business" and "naturalPOI" sections of the response object. We can examine each of these for our example:
 
-maximum number of returned locations is specified by the "top" parameter (3 in this case)
+**business:**
+```{r}
+print(sf_lr$business)
+```
+We see here that the Location Recognition API found 3 business locations within 0.5 miles of (37.7734,-122.4216). The names of these entities are "Edwardian Hotel", a business of type "Hotels"; "Sow Juice Pop-up", a business of type "Fast Food"; and "Zuni Café", a business of type "French Restaurant". We are given a variety of information about the detailed type of each business, as well as its website, phone number, address, and coordinates.
+
+Given that all 3 of our requested entities happened to be of type "business", we would not expect any natural POIs to have been returned. We can confirm this by examining the corresponding section of the returned object:
+```{r}
+print(sf_lr$naturalPOI)
+```
+We are given an empty list, indicating that no natural POIs were returned.
