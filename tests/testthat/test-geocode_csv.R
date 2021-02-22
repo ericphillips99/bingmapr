@@ -2,7 +2,6 @@
 
 context("Location Geocode CSV function for Bing Maps API")
 library(bingmapr)
-Sys.setenv(api_key="AiKOkTc7X6nt2Zlljde8g2AW3zDup7GaDz2LU-kxFzGh-3TnjOsawuZ025p29jUS")
 
 test_that("csv throws error when column names does not exist", {
   expect_error(geocode_csv("sf_starbucks_sample.csv",addressLine_col="street_addres",
