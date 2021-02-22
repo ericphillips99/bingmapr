@@ -28,7 +28,7 @@ Sys.setenv(api_key='your_key_here')
 
 Doing this will store your API key for your entire R session, allowing you to make multiple calls using the various wrapper functions within `bingmapr` without having to specify your API key each time.
 
-### Geocode
+## Geocode
 
 The `geocode` function can be used to geocode an address using the Bing Maps Locations API. It takes any combination of addressLine, locality, adminDistrict, postalCode, and countryRegion, and returns a geocoded coordinate pair corresponding to that location as well as other information about the location. If you are geocoding an address in the USA, you can think of these parameters as representing street address, city, state, ZIP code, and country abbreviation (US), respectively.
 
@@ -51,4 +51,26 @@ print(typeof(applepark_geocode))
 print(names(applepark_geocode))
 ```
 
-Here, we see that `geocode` returns a named list with four parts: "chords", "content", "params", and "response".
+We see that `geocode` returns a named list with four parts: "chords", "content", "params", and "response". We can examine these individually:
+
+
+**chords**: A named list containing the geocoded latitude and longitude coordinates for the location
+```{r}
+print(applepark_geocode['chords'])
+```
+
+**content**: A named list containing the complete response returned from the API. This includes not only the geocoded coordinates, but also information such as the confidence score of the geocode, the entity type of the returned coordinates, and aspects of the address that were not inputted as arguments into the API (here, for example, we are told that Apple Park is located in Santa Clara County, which we did not specify in our call to `geocode`).
+```{r}
+print(applepark_geocode['content'])
+```
+
+**params:** A named list containing the location parameters given as input to the `geocode` function.
+```{r}
+print(applepark_geocode['params'])
+```
+
+**response:** The response returned from the `httr` library. This includes information about the request and the response returned from the API, including the URL and the date/time of the request, as well as the status code, encoding type, and file size of the response.
+```{r}
+print(applepark_geocode['response'])
+```
+
