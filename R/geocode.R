@@ -52,7 +52,7 @@ geocode <- function(addressLine=NULL,locality=NULL,adminDistrict=NULL,postalCode
 }
 
 #' @export
-print.geocode <- function(x) {
+print.geocode <- function(x,...) {
   cat('Geocode Results','\n',sep='')
   cat('Geocoded coordinates:','\n')
   str(x$chords)

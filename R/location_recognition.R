@@ -53,7 +53,7 @@ location_recognition <- function(lat,long,radius=0.25,top=5,dateTime=NULL,type=N
   structure(list(business=parsed_response$resourceSets[[1]]$resources[[1]]$businessesAtLocation,naturalPOI=parsed_response$resourceSets[[1]]$resources[[1]]$naturalPOIAtLocation,params=params,response=response),class='location_recognition')
 }
 #' @export
-print.location_recognition <- function(x) {
+print.location_recognition <- function(x,...) {
   cat('Location Recognition Results','\n',sep='')
   cat('Businesses at location:','\n')
   str(x$business)

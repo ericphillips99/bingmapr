@@ -50,7 +50,7 @@ reverse_geocode <- function(lat,long,includeEntityTypes=NULL,verboseplacenames=N
   structure(list(address=address,content=parsed_response$resourceSets[[1]]$resources[[1]],params=params,response=response),class='reverse_geocode')
 }
 #' @export
-print.reverse_geocode <- function(x) {
+print.reverse_geocode <- function(x,...) {
   cat('Geocode Results','\n',sep='')
   cat('Reverse geocoded address:','\n')
   str(x$address)
