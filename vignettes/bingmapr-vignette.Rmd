@@ -147,3 +147,20 @@ Given that all 3 of our requested entities happened to be of type "business", we
 print(sf_lr$naturalPOI)
 ```
 We are given an empty list, indicating that no natural POIs were returned.
+
+## geocode_csv
+
+The `geocode_csv` function is designed to perform bulk geocoding of addresses from a CSV file using the `geocode` function of `bingmapr`. It takes a path to a CSV as well as strings representing the column names that correspond to each part of the address to geocode as inputs, and returns a tibble containing the original CSV with the columns "latitude" and "longitude" appended. It also write a copy of this tibble to disk as a CSV in the same location as the original CSV, with `_geocoded` appended to the filename.
+
+For example, suppose we had a CSV file located in the path `/users/ericphillips/Downloads/sf_starbucks.csv` containing addresses corresponding to the company owned Starbucks locations in San Francisco that we wished to geocode. In this file, the column "street_address" corresponds to the addressLine, "city" corresponds to the locality, "state" corresponds to the adminDistrict, "zipcode" corresponds to the postalCode, and "country" corresponds to the countryRegion (please see the `geocode` example above for more information about these location classifications).
+
+We can execute this operation using `geocode_csv`:
+```{r}
+sf_starbucks_geocoded <- geocode_csv('/users/ericphillips/Downloads/sf_starbucks.csv',addressLine_col='street_address',locality_col='city',adminDistrict_col='state',postalCode_col='zipcode',countryRegion_col='country')
+```
+
+We can examine the first few rows of the tibble returned by `geocode_csv`:
+```{r}
+head(sf_starbucks_geocoded,6)
+```
+The columns "latitude" and "longitude" correspond to the geocoded coordinates returned from the `geocode` function (the columns "lat" and "long" were part of the original dataset). A quick scan reveals that the geocoded coordinates seem to match up closely with the original coordinates, suggesting that our results are accurate.
