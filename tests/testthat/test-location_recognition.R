@@ -2,6 +2,7 @@
 
 context("Location Recognition wrapper function for Bing Maps API")
 library(bingmapr)
+Sys.setenv(api_key="AiKOkTc7X6nt2Zlljde8g2AW3zDup7GaDz2LU-kxFzGh-3TnjOsawuZ025p29jUS")
 
 kelowna_address <- location_recognition(lat=49.8682,long=-119.4889)
 bay_area_address <- location_recognition(lat=37.7128,long=-122.0293)
