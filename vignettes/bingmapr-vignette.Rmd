@@ -154,13 +154,29 @@ The `geocode_csv` function is designed to perform bulk geocoding of addresses fr
 
 For example, suppose we had a CSV file located in the path `/users/ericphillips/Downloads/sf_starbucks.csv` containing addresses corresponding to the company owned Starbucks locations in San Francisco that we wished to geocode. In this file, the column "street_address" corresponds to the addressLine, "city" corresponds to the locality, "state" corresponds to the adminDistrict, "zipcode" corresponds to the postalCode, and "country" corresponds to the countryRegion (please see the `geocode` example above for more information about these location classifications).
 
-We can execute this operation using `geocode_csv` (this operation is not executed when the vignette is built due to the large number of API requests that it entails):
+We can execute this operation using `geocode_csv` (this code is not executed when the vignette is built due to the large number of API requests that it entails):
 ```{r,eval=FALSE}
 sf_starbucks_geocoded <- geocode_csv('/users/ericphillips/Downloads/sf_starbucks.csv',addressLine_col='street_address',locality_col='city',adminDistrict_col='state',postalCode_col='zipcode',countryRegion_col='country')
 ```
 
-We can examine the first few rows of the tibble returned by `geocode_csv`:
+We can examine the first few rows of the tibble returned by `geocode_csv` (a screenshot of the output is included):
 ```{r,eval=FALSE}
 head(sf_starbucks_geocoded,6)
 ```
-The columns "latitude" and "longitude" correspond to the geocoded coordinates returned from the `geocode` function (the columns "lat" and "long" were part of the original dataset). A quick scan reveals that the geocoded coordinates seem to match up closely with the original coordinates, suggesting that our results are accurate.
+![Screenshot of tibble](tibble_screenshot.png)
+The columns "latitude" and "longitude" correspond to the geocoded coordinates returned from the `geocode` function (the columns "lat" and "long" were part of the original dataset, and serve as a reference). A quick scan reveals that the geocoded coordinates seem to match up closely with the original coordinates, suggesting that our results are accurate.
+
+Using these results, we can generate a geospatial plot using the libraries ggplot, rgdal, and sp. Here, we are using a [shapefile](https://data.sfgov.org/Geographic-Locations-and-Boundaries/SF-Find-Neighborhoods/pty2-tcw4) containing the neighborhood boundaries within San Francisco as our base map, and are using the geocoded coordinates from `geocode_csv` to plot all of the company-owned Starbucks locations within San Francisco (again, this code is not executed when the vignette is built due to resource constraints, and instead a screenshot of the outputted plot is included): 
+```{r,eval=FALSE}
+# Make data saptial data
+coordinates(starbucks) <- c("longitude", "latitude")
+crs.geo1 = CRS("+proj=longlat")
+proj4string(starbucks) = crs.geo1
+sanfran = readOGR(dsn = "/path/to/shapefile", layer = "geo_export_61fc405b-0a0a-4a75-bec4-41171753eb6f")
+# Change the size of the plots
+options(repr.plot.width = 13, repr.plot.height = 13)
+# Make plot
+plot(sanfran)
+points(starbucks, pch = 19, col = "steelblue")
+```
+![Plot of Starbucks locations in San Francisco](sf_map.png)
