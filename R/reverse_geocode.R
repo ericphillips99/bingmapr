@@ -18,7 +18,8 @@
 #' @importFrom httr GET user_agent http_status status_code content
 #' @importFrom jsonlite fromJSON
 #' @importFrom utils str
-#'
+
+#' @export
 reverse_geocode <- function(lat,long,includeEntityTypes=NULL,verboseplacenames=NULL,includeNeighborhood=NULL) {
   # Check if user has set API key as env var
   key <- Sys.getenv('api_key')
@@ -48,7 +49,7 @@ reverse_geocode <- function(lat,long,includeEntityTypes=NULL,verboseplacenames=N
   address <- parsed_response$resourceSets[[1]]$resources[[1]]$name
   structure(list(address=address,content=parsed_response$resourceSets[[1]]$resources[[1]],params=params,response=response),class='reverse_geocode')
 }
-
+#' @export
 print.reverse_geocode <- function(x) {
   cat('Geocode Results','\n',sep='')
   cat('Reverse geocoded address:','\n')

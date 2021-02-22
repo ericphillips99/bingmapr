@@ -20,6 +20,7 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom utils str
 #'
+#' @export
 geocode <- function(addressLine=NULL,locality=NULL,adminDistrict=NULL,postalCode=NULL,countryRegion=NULL,includeNeighborhood=NULL) {
   # Check if user has set API key as env var
   key <- Sys.getenv('api_key')
@@ -50,6 +51,7 @@ geocode <- function(addressLine=NULL,locality=NULL,adminDistrict=NULL,postalCode
   structure(list(chords=chords,content=parsed_response$resourceSets[[1]]$resources[[1]],params=params,response=response),class='geocode')
 }
 
+#' @export
 print.geocode <- function(x) {
   cat('Geocode Results','\n',sep='')
   cat('Geocoded coordinates:','\n')
