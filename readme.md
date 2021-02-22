@@ -1,1 +1,1 @@
-![build](https://github.com/ericphillips99/bingmapr/tree/main/.github/workflows/r2d2.yml/badge.svg)
+![build](https://github.com/ericphillips99/bingmapr/actions/workflows/r2d2.yml)
