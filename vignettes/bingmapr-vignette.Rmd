@@ -17,3 +17,97 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(bingmapr)
 ```
+
+`bingmapr` is a wrapper for the Bing Maps API written in R. It currently includes wrapper functions for several of the Locations API functions, including geocoding, reverse geocoding, and location recognition, as well as a function for batch geocoding from a CSV.
+
+In order to make use of any of the functions contained within this package, you must first obtain a Bing Maps API key [here](https://www.bingmapsportal.com). Once you have your key, you must set it as an environment variable with name `api_key`:
+
+```{r, eval=FALSE}
+Sys.setenv(api_key='your_key_here')
+```
+
+Doing this will store your API key for your entire R session, allowing you to make multiple calls using the various wrapper functions within `bingmapr` without having to specify your API key each time.
+
+## Geocode
+
+The `geocode` function can be used to geocode an address using the Bing Maps Locations API. It takes any combination of addressLine, locality, adminDistrict, postalCode, and countryRegion, and returns a geocoded coordinate pair corresponding to that location as well as other information about the location. If you are geocoding an address in the USA, you can think of these parameters as representing street address, city, state, ZIP code, and country abbreviation (US), respectively.
+
+For example, suppose we wished to obtain the coordinates for Apple Park, located at One Apple Park Way in Cupertino, CA (zipcode 95014). We can use the `geocode` function to accomplish this:
+
+```{r}
+applepark_geocode <- geocode(addressLine='One Apple Park Way',locality='Cupertino',adminDistrict='CA',postalCode='95014',countryRegion='US')
+```
+
+We can then print the response of our geocode request:
+
+```{r}
+print(applepark_geocode)
+```
+
+Let's take a closer look at the object returned by `geocode`.
+
+```{r}
+print(typeof(applepark_geocode))
+print(names(applepark_geocode))
+```
+
+We see that `geocode` returns a named list with four parts: "chords", "content", "params", and "response". We can examine these individually:
+
+
+**chords**: A named list containing the geocoded latitude and longitude coordinates for the location
+```{r}
+print(applepark_geocode['chords'])
+```
+
+**content**: A named list containing the complete response returned from the API. This includes not only the geocoded coordinates, but also information such as the confidence score of the geocode, the entity type of the returned coordinates, and aspects of the address that were not inputted as arguments into the API (here, for example, we are told that Apple Park is located in Santa Clara County, which we did not specify in our call to `geocode`).
+```{r}
+print(applepark_geocode['content'])
+```
+
+**params:** A named list containing the location parameters given as input to the `geocode` function.
+```{r}
+print(applepark_geocode['params'])
+```
+
+**response:** The response returned from the `httr` library. This includes information about the request and the response returned from the API, including the URL and the date/time of the request, as well as the status code, encoding type, and file size of the response.
+```{r}
+print(applepark_geocode['response'])
+```
+
+## reverse_geocode
+
+The `reverse_geocode` function can be used to reverse geocode an address using the Bing Maps Locations API. It essentially performs the opposite task of the `geocode` function, in that it takes in a latitude and longitude pair and returns the addressLine, locality, adminDistrict, postalCode, and countryRegion corresponding to the address at that location.
+
+Continuing with our Apple Park example from the `geocode` function, suppose we had the coordinate pair (37.3348,-122.0091), and wished to obtain the address associated with this location. We can accomplish this using `reverse_geocode`:
+
+```{r}
+applepark_reverse_geocode <- reverse_geocode(lat=37.3348,long=-122.0091)
+```
+
+We can print the response of our reverse geocode call:
+
+```{r}
+print(applepark_reverse_geocode)
+```
+
+Once again, we can examine the structure of the returned object:
+
+```{r}
+print(typeof(applepark_reverse_geocode))
+print(names(applepark_reverse_geocode))
+```
+
+Here, we see that the structure of the object is very similar to that of the `geocode` function, with the only difference being the inclusion of "address" instead of "chords" since we are now reverse geocoding. Given the high degree of similarity in output between `geocode` and `reverse_geocode`, I will not go into detail in explaining the output here. Please see the above example of `geocode` for a more detailed explanation.
+
+**address:** Contains the complete geocoded address.
+```{r}
+print(applepark_reverse_geocode['address'])
+```
+
+**content:** Contains similar information about the location as was returned in `geocode`.
+```{r}
+print(applepark_reverse_geocode['content'])
+```
+
+## location_recognition
+

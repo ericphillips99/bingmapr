@@ -16,6 +16,7 @@
 #' @importFrom stringr str_split
 #' @importFrom utils str
 #'
+#' @export
 geocode_csv <- function(csv_path,addressLine_col=NULL,locality_col=NULL,adminDistrict_col=NULL,postalCode_col=NULL,countryRegion_col=NULL) {
   csv <- read_csv(csv_path)
   # Check if provided columns exist

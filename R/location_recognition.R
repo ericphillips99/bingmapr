@@ -23,6 +23,7 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom utils str
 #'
+#' @export
 location_recognition <- function(lat,long,radius=0.25,top=5,dateTime=NULL,type=NULL,distanceUnit='mi',includeEntityTypes=NULL,verboseplacenames=NULL) {
   # Check if user has set API key as env var
   key <- Sys.getenv('api_key')
@@ -51,8 +52,8 @@ location_recognition <- function(lat,long,radius=0.25,top=5,dateTime=NULL,type=N
   parsed_response <- fromJSON(content(response,'text'),simplifyVector=FALSE)
   structure(list(business=parsed_response$resourceSets[[1]]$resources[[1]]$businessesAtLocation,naturalPOI=parsed_response$resourceSets[[1]]$resources[[1]]$naturalPOIAtLocation,params=params,response=response),class='location_recognition')
 }
-
-print.location_recognition <- function(x) {
+#' @export
+print.location_recognition <- function(x,...) {
   cat('Location Recognition Results','\n',sep='')
   cat('Businesses at location:','\n')
   str(x$business)
