@@ -5,6 +5,7 @@ test_invalid_country_code <- geocode(addressLine='405 Spray Ave',locality='Banff
 context("test the geocode function with reasonable inputs with different addresses and some missing/incorrect parameters that might be expected")
 
 library(bingmapr)
+Sys.setenv(api_key="AiKOkTc7X6nt2Zlljde8g2AW3zDup7GaDz2LU-kxFzGh-3TnjOsawuZ025p29jUS")
 
 test_that("is latitude correct", {
   expect_equal(round(test_geocode$chords$latitude,digits=2), 49.96 )
