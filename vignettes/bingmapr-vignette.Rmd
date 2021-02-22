@@ -17,3 +17,30 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(bingmapr)
 ```
+
+`bingmapr` is a wrapper for the Bing Maps API written in R. It currently includes wrapper functions for several of the Locations API functions, including geocoding, reverse geocoding, and location recognition, as well as a function for batch geocoding from a CSV.
+
+In order to make use of any of the functions contained within this package, you must first obtain a Bing Maps API key [here](https://www.bingmapsportal.com). Once you have your key, you must set it as an environment variable with name `api_key`:
+
+```{r, eval=FALSE}
+Sys.setenv(api_key='your_key_here')
+```
+
+Doing this will store your API key for your entire R session, allowing you to make multiple calls using the various wrapper functions within `bingmapr` without having to specify your API key each time.
+
+### Geocode
+
+The `geocode` function can be used to geocode an address using the Bing Maps Locations API. It takes any combination of addressLine, locality, adminDistrict, postalCode, and countryRegion, and returns a geocoded coordinate pair corresponding to that location as well as other information about the location. If you are geocoding an address in the USA, you can think of these parameters as representing street address, city, state, ZIP code, and country abbreviation (US), respectively.
+
+For example, suppose we wished to obtain the coordinates for Apple Park, located at One Apple Park Way in Cupertino, CA (zipcode 95014). We can use the `geocode` function to accomplish this:
+
+```{r}
+applepark_geocode <- geocode(addressLine='One Apple Park Way',locality='Cupertino',adminDistrict='CA',postalCode='95014',countryRegion='US')
+```
+
+We can then print the response of our geocode request:
+
+```{r}
+print(applepark_geocode)
+```
+
